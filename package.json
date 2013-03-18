@@ -1,0 +1,30 @@
+{
+  "name": "neo4j-js",
+  "version": "0.0.1",
+  "author": "Atlantis Flight Development <bret@atlantisflight.org>",
+  "description": "A Node.js (pure JavaScript) client library for accessing neo4j databases with batch support.",
+  "contributors": [ 
+    {
+      "name": "Bret Copeland",
+      "email": "bret@atlantisflight.org"
+    } 
+  ],
+  "main": "./lib/Neo4jApi.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bretcope/neo4j-js.git"
+  },
+  "keywords": [
+    "neo4j",
+    "rest",
+    "api",
+    "graph",
+    "database",
+    "asynchronous"
+  ],
+  "analyze": false,
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.8"
+  }
+}
