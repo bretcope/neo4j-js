@@ -4,7 +4,7 @@ This page is to document which REST API features are implemented in some fashion
 
 ## 
 
-```
+```javascript
 [ ] Not Implemented
 [x] Implemented
 [*] Implemented, but see caveat
