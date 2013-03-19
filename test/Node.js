@@ -85,6 +85,12 @@ describe('Node', function ()
 					done();
 			}
 		});
+
+		/* ========================================================================================================
+		 * 
+		 * Create Relationships
+		 * 
+		 * ===================================================================================================== */
 		
 		describe('Node.createRelationshipFrom', function ()
 		{
@@ -167,6 +173,36 @@ describe('Node', function ()
 				batch.run();
 			});
 		});
+
+		/* ========================================================================================================
+		 * 
+		 * Get Relationships
+		 * 
+		 * ===================================================================================================== */
+		
+		function relationshipChecks (expectedResults, filter, done, extraCheck)
+		{
+			return function (error, rels)
+			{
+				assert(!error, error);
+				assert.isArray(rels, 'expected an array');
+				assert.equal(rels.length, expectedResults, 'expected array of length ' + expectedResults);
+				
+				for (var i in rels)
+				{
+					assert(graph.isRelationship(rels[i]), 'expected all elements to be instances of Relationship');
+					
+					if (filter)
+						assert(filter.indexOf(rels[i].type) != -1, 'results were not filtered by type correctly');
+					
+					if (extraCheck)
+						extraCheck(rels[i]);
+				}
+				
+				if (done)
+					done();
+			};
+		}
 		
 		describe('Node.getAllRelationships', function ()
 		{
@@ -227,41 +263,23 @@ describe('Node', function ()
 				}));
 			});
 		});
+
+		/* ========================================================================================================
+		 * 
+		 * Properties
+		 * 
+		 * ===================================================================================================== */
 		
-		function relationshipChecks (expectedResults, filter, done, extraCheck)
+		function propertiesCheck (expected, done)
 		{
-			return function (error, rels)
-			{
-				assert(!error, error);
-				assert.isArray(rels, 'expected an array');
-				assert.equal(rels.length, expectedResults, 'expected array of length ' + expectedResults);
-				
-				for (var i in rels)
-				{
-					assert(graph.isRelationship(rels[i]), 'expected all elements to be instances of Relationship');
-					
-					if (filter)
-						assert(filter.indexOf(rels[i].type) != -1, 'results were not filtered by type correctly');
-					
-					if (extraCheck)
-						extraCheck(rels[i]);
-				}
-				
-				if (done)
-					done();
-			};
-		}
-		
-		function propertiesCheck (node, expected, done)
-		{
-			node.refreshProperties(function (error, props)
+			return function (error, props)
 			{
 				assert(!error, error);
 				assert.deepEqual(expected, props, 'properties are incorrect');
 				
 				if (done)
 					done();
-			});
+			};
 		}
 		
 		describe('Node.refreshProperties', function ()
@@ -269,7 +287,7 @@ describe('Node', function ()
 			it("return the node's properties", function (done)
 			{
 				var origProps = _nodes[0].data;
-				propertiesCheck(_nodes[0], origProps, done);
+				_nodes[0].refreshProperties(propertiesCheck(origProps, done));
 			});
 		});
 		
@@ -280,11 +298,7 @@ describe('Node', function ()
 				var props = sampleNodeData();
 				delete props.c;
 				
-				_nodes[0].deleteProperties('c', function (error)
-				{
-					assert(!error, error);
-					propertiesCheck(_nodes[0], props, done);
-				});
+				_nodes[0].deleteProperties('c', propertiesCheck(props, done));
 			});
 			
 			it("delete 'a' and 'c' using batching", function (done)
@@ -295,16 +309,13 @@ describe('Node', function ()
 				
 				var batch = graph.createBatch();
 				
-				_nodes[0].deleteProperties(batch, 'a', function (error)
+				_nodes[0].deleteProperties(batch, false, 'a', function (error, nothing)
 				{
 					assert(!error, error);
+					assert.isUndefined(nothing, 'deleteProperties returned a second parameter even though updateData was false');
 				});
 				
-				_nodes[0].deleteProperties(batch, 'c', function (error)
-				{
-					assert(!error, error);
-					propertiesCheck(_nodes[0], props, done);
-				});
+				_nodes[0].deleteProperties(batch, 'c', propertiesCheck(props, done));
 				
 				batch.run();
 			});
@@ -315,37 +326,20 @@ describe('Node', function ()
 				delete props.c;
 				delete props.a;
 				
-				_nodes[0].deleteProperties(['c', 'a'], function (error)
-				{
-					assert(!error, error);
-					propertiesCheck(_nodes[0], props, done);
-				});
+				_nodes[0].deleteProperties(['c', 'a'], propertiesCheck(props, done));
 			});
 			
 			it("delete all properties", function (done)
 			{
-				_nodes[0].deleteProperties(function (error)
-				{
-					assert(!error, error);
-					propertiesCheck(_nodes[0], {}, done);
-				});
+				_nodes[0].deleteProperties(propertiesCheck({}, done));
 			});
 			
 			it("delete all properties using batching", function (done)
 			{
 				var batch = graph.createBatch();
 				
-				_nodes[0].deleteProperties(function (error)
-				{
-					assert(!error, error);
-					propertiesCheck(_nodes[0], {});
-				});
-				
-				_nodes[1].deleteProperties(function (error)
-				{
-					assert(!error, error);
-					propertiesCheck(_nodes[1], {}, done);
-				});
+				_nodes[0].deleteProperties(propertiesCheck({}));
+				_nodes[1].deleteProperties(propertiesCheck({}, done));
 				
 				batch.run();
 			});
@@ -356,12 +350,7 @@ describe('Node', function ()
 			it("replace all properties", function (done)
 			{
 				var props = { str: 'new', bool: false, arr: [2,3], num: 18 };
-				
-				_nodes[0].replaceAllProperties(props, function (error)
-				{
-					assert(!error, error);
-					propertiesCheck(_nodes[0], props, done);
-				});
+				_nodes[0].replaceAllProperties(props, propertiesCheck(props, done));
 			});
 			
 			it("replace all properties on multiple nodes using batching", function (done)
@@ -369,17 +358,8 @@ describe('Node', function ()
 				var props = { str: 'new', bool: false, arr: [2,3], num: 18 };
 				var batch = graph.createBatch();
 				
-				_nodes[0].replaceAllProperties(batch, props, function (error)
-				{
-					assert(!error, error);
-					propertiesCheck(_nodes[0], props);
-				});
-				
-				_nodes[1].replaceAllProperties(batch, props, function (error)
-				{
-					assert(!error, error);
-					propertiesCheck(_nodes[1], props, done);
-				});
+				_nodes[0].replaceAllProperties(batch, props, propertiesCheck(props));
+				_nodes[1].replaceAllProperties(batch, props, propertiesCheck(props, done));
 				
 				batch.run();
 			});
@@ -387,23 +367,13 @@ describe('Node', function ()
 			it("replace all properties with a single boolean property", function (done)
 			{
 				var props = { bool: false };
-				
-				_nodes[0].replaceAllProperties('bool', false, function (error)
-				{
-					assert(!error, error);
-					propertiesCheck(_nodes[0], props, done);
-				});
+				_nodes[0].replaceAllProperties('bool', false, propertiesCheck(props, done));
 			});
 			
 			it("replace all properties with a single array property", function (done)
 			{
 				var props = { arr: [2,3,7] };
-				
-				_nodes[0].replaceAllProperties('arr', [2,3,7], function (error)
-				{
-					assert(!error, error);
-					propertiesCheck(_nodes[0], props, done);
-				});
+				_nodes[0].replaceAllProperties('arr', [2,3,7], propertiesCheck(props, done));
 			});
 			
 			it("replace all properties with a single property using batching", function (done)
@@ -411,17 +381,8 @@ describe('Node', function ()
 				var props = { bool: false };
 				var batch = graph.createBatch();
 				
-				_nodes[0].replaceAllProperties(batch, 'bool', false, function (error)
-				{
-					assert(!error, error);
-					propertiesCheck(_nodes[0], props);
-				});
-				
-				_nodes[1].replaceAllProperties(batch, 'bool', false, function (error)
-				{
-					assert(!error, error);
-					propertiesCheck(_nodes[1], props, done);
-				});
+				_nodes[0].replaceAllProperties(batch, 'bool', false, propertiesCheck(props));
+				_nodes[1].replaceAllProperties(batch, 'bool', false, propertiesCheck(props, done));
 				
 				batch.run();
 			});
@@ -434,11 +395,7 @@ describe('Node', function ()
 				var props = sampleNodeData();
 				props.b = 'three';
 				
-				_nodes[0].setProperty('b', 'three', function (error)
-				{
-					assert(!error, error);
-					propertiesCheck(_nodes[0], props, done);
-				});
+				_nodes[0].setProperty('b', 'three', propertiesCheck(props, done));
 			});
 			
 			it("update a single property on multiple nodes using batching", function (done)
@@ -447,17 +404,8 @@ describe('Node', function ()
 				var props = sampleNodeData();
 				props.b = false;
 				
-				_nodes[0].setProperty(batch, 'b', false, function (error)
-				{
-					assert(!error, error);
-					propertiesCheck(_nodes[0], props);
-				});
-				
-				_nodes[1].setProperty(batch, 'b', false, function (error)
-				{
-					assert(!error, error);
-					propertiesCheck(_nodes[1], props, done);
-				});
+				_nodes[0].setProperty(batch, 'b', false, propertiesCheck(props));
+				_nodes[1].setProperty(batch, 'b', false, propertiesCheck(props, done));
 				
 				batch.run();
 			});
@@ -469,16 +417,13 @@ describe('Node', function ()
 				props.b = false;
 				props.c = [84, 23];
 				
-				_nodes[0].setProperty(batch, 'b', props.b, function (error)
+				_nodes[0].setProperty(batch, false, 'b', props.b, function (error, nothing)
 				{
 					assert(!error, error);
+					assert.isUndefined(nothing, 'setProperty returned a second parameter even though updateData was false');
 				});
 				
-				_nodes[0].setProperty(batch, 'c', props.c, function (error)
-				{
-					assert(!error, error);
-					propertiesCheck(_nodes[0], props, done);
-				});
+				_nodes[0].setProperty(batch, 'c', props.c, propertiesCheck(props, done));
 				
 				batch.run();
 			});
@@ -489,11 +434,7 @@ describe('Node', function ()
 				props.b = false;
 				props.c = [84, 23];
 				
-				_nodes[0].setProperties(props, function (error)
-				{
-					assert(!error, error);
-					propertiesCheck(_nodes[0], props, done);
-				});
+				_nodes[0].setProperties(props, propertiesCheck(props, done));
 			});
 		});
 	});
