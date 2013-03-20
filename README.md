@@ -22,6 +22,8 @@ After looking at `node-neo4j`, I found a few things which prompted me to write m
 
 ## Current Status
 
+> Note: This library is in the early stages of development, is incomplete, and not by any means guaranteed to be stable. If you have input, or are interested in contributing to development or testing, please contact me! [https://github.com/bretcope](https://github.com/bretcope)
+
 A comprehensive checklist of which API methods have and have not been implemented so far is available in the [Rest.md](docs/REST.md) file.
 
 All of the methods have only been tested on neo4j 1.8.2 so far. Backwards compatibility characteristics are unknown. 
