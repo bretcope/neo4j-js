@@ -44,7 +44,7 @@ Relationships (17.6)
 [x] 17.6.13. Get relationships on a node without relationships
 
 Relationship Types (17.7)
-[ ] 17.7.1. Get relationship types
+[x] 17.7.1. Get relationship types
 
 Node Properties (17.8)
 [x] 17.8.1. Set property on node

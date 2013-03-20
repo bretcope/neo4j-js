@@ -1,3 +1,6 @@
+// this file is simply to allow for debugging the unit tests... hence the 1 hour timeout
+// for normal testing, just run 'mocha' in this directory.
+
 var Mocha = require('mocha'),
     fs = require('fs'),
     path = require('path');

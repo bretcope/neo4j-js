@@ -9,7 +9,7 @@ describe('Indexes', function ()
 		var _nodeIndexes = [];
 		var _relIndexes = [];
 		
-		describe('graph.createNodeIndex', function ()
+		describe('Graph.createNodeIndex', function ()
 		{
 			it('create a node index with the default config', function (done)
 			{
@@ -33,7 +33,7 @@ describe('Indexes', function ()
 			});
 		});
 		
-		describe('graph.createRelationshipIndex', function ()
+		describe('Graph.createRelationshipIndex', function ()
 		{
 			it('create a relationship index with the default config', function (done)
 			{
@@ -75,7 +75,7 @@ describe('Indexes', function ()
 			};
 		}
 		
-		describe('graph.listNodeIndexes', function ()
+		describe('Graph.listNodeIndexes', function ()
 		{
 			it('list node indexes', function (done)
 			{
@@ -84,7 +84,7 @@ describe('Indexes', function ()
 			});
 		});
 		
-		describe('graph.listRelationshipIndexes', function ()
+		describe('Graph.listRelationshipIndexes', function ()
 		{
 			it('list relationship indexes', function (done)
 			{
@@ -143,7 +143,7 @@ describe('Indexes', function ()
 			batch.run();
 		}
 		
-		describe('graph.deleteNodeIndex', function ()
+		describe('Graph.deleteNodeIndex', function ()
 		{
 			it('delete all test node indexes', function (done)
 			{
@@ -152,7 +152,7 @@ describe('Indexes', function ()
 			});
 		});
 		
-		describe('graph.deleteRelationshipIndex', function ()
+		describe('Graph.deleteRelationshipIndex', function ()
 		{
 			it('delete all test relationship indexes', function (done)
 			{

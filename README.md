@@ -107,15 +107,12 @@ var query = [
     'RETURN m, r'
 ];
 
-graph.query(query.join('\n'), { id: 1 }, function (err, obj)
-{
-    if (err)
-    {
+graph.query(query.join('\n'), { id: 1 }, function (err, obj) {
+    if (err) {
         console.log(err);
         console.log(err.stack);
     }
-    else
-    {
+    else {
         for (var i = 0; i < obj.length; i++) {
             var relationship = obj[i].r;
             var node = obj[i].m;
@@ -134,4 +131,7 @@ Some unit tests are in place, and several more will follow soon.
 
 The unit tests rely on [Mocha](http://visionmedia.github.com/mocha/) and [Chai](http://chaijs.com/) which are included as development dependencies in the npm package. If you are not concerned about unit testing, you can omit downloading Mocha and Chai during install by including the production flag `npm install neo4j-js --production`.
  
-To run the unit tests, go to the root `neo4j-js` directory and type `mocha`.
+To run the unit tests:
+
+* Copy `test/config.sample.json` to `test/config.json` and edit as necessary.
+* Go to the root `neo4j-js` directory and type `mocha`.
