@@ -64,10 +64,10 @@ Relationship Properties (17.9)
 [x] 17.9.6. Remove property from a non-existing relationship
 
 Indexes (17.10)
-[ ] 17.10.1. Create node index
-[ ] 17.10.2. Create node index with configuration
-[ ] 17.10.3. Delete node index
-[ ] 17.10.4. List node indexes
+[x] 17.10.1. Create node index
+[x] 17.10.2. Create node index with configuration
+[x] 17.10.3. Delete node index
+[x] 17.10.4. List node indexes
 [ ] 17.10.5. Add node to index
 [ ] 17.10.6. Remove all entries with a given node from an index
 [ ] 17.10.7. Remove all entries with a given node and key from an index
