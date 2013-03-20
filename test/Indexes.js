@@ -1,6 +1,7 @@
 var assert = require('chai').assert,
 	config = require('./config.json'),
-	neo4j = require('../lib/Neo4jApi.js');
+	neo4j = require('../lib/Neo4jApi.js'),
+	Helpers = require('./Helpers.js');
 
 describe('Indexes', function ()
 {
@@ -142,6 +143,123 @@ describe('Indexes', function ()
 			
 			batch.run();
 		}
+		
+		describe('Index Usage', function ()
+		{
+			var helper = Helpers(graph);
+			
+			before(helper.create);
+			after(helper.destroy);
+			
+			var _vals = ['test node value', 'different value', 'test rel value'];
+			
+			describe('Node.index', function ()
+			{
+				it('add a property to an index', function (done)
+				{
+					helper.nodes[0].index('node_test_1', 'name', _vals[0], function (error)
+					{
+						assert(!error, error);
+						done();
+					});
+				});
+				
+				it('add another node to the same index', function (done)
+				{
+					helper.nodes[1].index('node_test_1', 'name', _vals[1], function (error)
+					{
+						assert(!error, error);
+						done();
+					});
+				});
+			});
+			
+			describe('Relationship.index', function ()
+			{
+				it('add a property to an index', function (done)
+				{
+					helper.relationships[0].index('rel_test_1', 'name', _vals[2], function (error)
+					{
+						assert(!error, error);
+						done();
+					});
+				});
+			});
+			
+			describe('Graph.nodeExactQuery', function ()
+			{
+				it('extract a node from the index', function (done)
+				{
+					graph.nodeExactQuery('node_test_1', 'name', _vals[0], function (error, nodes)
+					{
+						assert(!error, error);
+						assert.isArray(nodes, 'expected result to be an array');
+						assert.equal(nodes.length, 1, 'expected an array of length 1');
+						assert.equal(nodes[0], helper.nodes[0].id, 'return results were incorrect');
+						done();
+					});
+				});
+			});
+			
+			describe('Graph.relationshipExactQuery', function ()
+			{
+				it('extract a node from the index', function (done)
+				{
+					graph.relationshipExactQuery('rel_test_1', 'name', _vals[2], function (error, relationships)
+					{
+						assert(!error, error);
+						assert.isArray(relationships, 'expected result to be an array');
+						assert.equal(relationships.length, 1, 'expected an array of length 1');
+						assert.equal(relationships[0], helper.relationships[0].id, 'return results were incorrect');
+						done();
+					});
+				});
+			});
+			
+			function verifyRemoved (done)
+			{
+				return function (error, nodes)
+				{
+					assert(!error, error);
+					assert.isArray(nodes, 'expected an empty array');
+					assert.equal(nodes.length, 0, 'expected an empty array');
+					done();
+				};
+			}
+			
+			describe('Node.removeFromIndex', function ()
+			{
+				it('remove node from index', function (done)
+				{
+					helper.nodes[0].removeFromIndex('node_test_1', function (error)
+					{
+						assert(!error, error);
+						graph.nodeExactQuery('node_test_1', 'name', _vals[0], verifyRemoved(done));
+					});
+				});
+				
+				it('remove node from index specifying a key', function (done)
+				{
+					helper.nodes[1].removeFromIndex('node_test_1', 'name', function (error)
+					{
+						assert(!error, error);
+						graph.nodeExactQuery('node_test_1', 'name', _vals[1], verifyRemoved(done));
+					});
+				});
+			});
+			
+			describe('Relationship.removeFromIndex', function ()
+			{
+				it('remove relationship from index specifying a key and value', function (done)
+				{
+					helper.relationships[0].removeFromIndex('rel_test_1', 'name', _vals[2], function (error)
+					{
+						assert(!error, error);
+						graph.relationshipExactQuery('rel_test_1', 'name', _vals[2], verifyRemoved(done));
+					});
+				});
+			});
+		});
 		
 		describe('Graph.deleteNodeIndex', function ()
 		{

@@ -5,9 +5,10 @@ This page is to document which REST API features are implemented in some fashion
 ## 
 
 ```javascript
-[ ] Not Implemented
+[ ] Not implemented yet
 [x] Implemented
 [*] Implemented, but see caveat
+[!] Will not be implemented
 
 Service Root (17.1)
 [x] 17.1.1. Get service root
@@ -68,12 +69,13 @@ Indexes (17.10)
 [x] 17.10.2. Create node index with configuration
 [x] 17.10.3. Delete node index
 [x] 17.10.4. List node indexes
-[ ] 17.10.5. Add node to index
-[ ] 17.10.6. Remove all entries with a given node from an index
-[ ] 17.10.7. Remove all entries with a given node and key from an index
-[ ] 17.10.8. Remove all entries with a given node, key and value from an index
-[ ] 17.10.9. Find node by exact match
-[ ] 17.10.10. Find node by query
+[x] 17.10.5. Add node to index
+[x] 17.10.6. Remove all entries with a given node from an index
+[x] 17.10.7. Remove all entries with a given node and key from an index
+[x] 17.10.8. Remove all entries with a given node, key and value from an index
+[*] 17.10.9. Find node by exact match  "Implemented using a Cypher query rather than the REST query endpoint."
+[!] 17.10.10. Find node by query
+        "Because the query style depends on the index provider, it is probably best to not wrap this endpoint."
 
 Unique Indexes (17.11)
 [ ] 17.11.1. Get or create unique node (create)
@@ -86,8 +88,8 @@ Unique Indexes (17.11)
 [ ] 17.11.8. Create a unique relationship or return fail (fail)
 
 Automatic Indexes (17.12)
-[ ] 17.12.1. Find node by exact match from an automatic index
-[ ] 17.12.2. Find node by query from an automatic index
+[*] 17.12.1. Find node by exact match from an automatic index  "** See 17.10.9 note."
+[!] 17.12.2. Find node by query from an automatic index  "** See 17.10.10 note."
 
 Configurable Automatic Indexing (17.13)
 [ ] 17.13.1. Create an auto index for nodes with specific configuration

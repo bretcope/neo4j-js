@@ -36,7 +36,7 @@ Nearly all Node and Relationship endpoint features are implemented. See the [Res
 
 ##### Indexing
 
-Currently indexing is not supported at all (besides auto indexing and using Cypher queries). This is the next major priority and should be expected soon.
+Indexing is partially implemented. Indexes can be created, deleted, listed, and queried. Key/value pair can be inserted and removed from indexes using nodes and relationships. 'Unique Indexes' and 'Configurable Automatic Indexing' have not been implemented yet.
 
 ##### Graph Algorithms
 
