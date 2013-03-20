@@ -2,7 +2,7 @@
 
 ### Classes Reference
 
-* [Graph](docs/Graph.md)
-* [Node](docs/Node.md)
-* [Path](docs/Path.md)
-* [Relationship](docs/Path.md)
+* [Graph](Graph.md)
+* [Node](Node.md)
+* [Path](Path.md)
+* [Relationship](Path.md)
