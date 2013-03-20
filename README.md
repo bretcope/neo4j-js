@@ -22,7 +22,7 @@ After looking at `node-neo4j`, I found a few things which prompted me to write m
 
 ## Current Status
 
-A comprehensive checklist of which API methods have and have not been implemented so far is available in the [Rest.md](REST.md) file.
+A comprehensive checklist of which API methods have and have not been implemented so far is available in the [Rest.md](docs/REST.md) file.
 
 All of the methods have only been tested on neo4j 1.8.2 so far. Backwards compatibility characteristics are unknown. 
 
@@ -32,7 +32,7 @@ Cypher Queries with and without params are fully supported, however, nested resu
 
 ##### Node and Relationship API Endpoints
 
-Nearly all Node and Relationship endpoint features are implemented. See the [Rest.md](REST.md) file for details.
+Nearly all Node and Relationship endpoint features are implemented. See the [Rest.md](docs/REST.md) file for details.
 
 ##### Indexing
 
