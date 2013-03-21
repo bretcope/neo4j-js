@@ -1,5 +1,7 @@
 # neo4j-js Documentation Home
 
+See also [README.md](../README.md)
+
 ### Classes Reference
 
 | Class Name | Description |
