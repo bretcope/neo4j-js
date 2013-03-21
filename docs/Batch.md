@@ -22,7 +22,7 @@ var batch = graph.createBatch();
 
 ## Properties
 
-## requests
+### requests
 
 ```scala
 Array Batch.requests
