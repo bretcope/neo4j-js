@@ -2,6 +2,7 @@
 
 ### Classes Reference
 
+* [Batch](Batch.md)
 * [Graph](Graph.md)
 * [Node](Node.md)
 * [Path](Path.md)

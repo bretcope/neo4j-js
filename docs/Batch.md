@@ -1,5 +1,7 @@
 # Batch Class
 
+[« Documentation Home](Documentation.md)
+
 `Batch` objects facilitate grouping multiple API calls into a single batch request. Most library methods accept a `Batch` object as an optional first parameter.
 
 ## Constructor
