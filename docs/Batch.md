@@ -41,5 +41,6 @@ Batch.run ( Function errorHandler )
 
 Runs all requests associated with the `Batch` object in a single API request.
 
-* `errorHandler` (optional) If provided, this function will be called in case of an error. If no error handler is provided, callbacks associated with each individual request will all be called with the error. 
+`errorHandler`
+* If provided, this function will be called in case of an error. If no error handler is provided, callbacks associated with each individual request will all be called with the error. 
 Signature: `Function ( error )`
