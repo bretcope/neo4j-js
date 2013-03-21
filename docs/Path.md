@@ -18,7 +18,7 @@
 
 ## Constructor
 
-Currently, `Path` objects are only returned in the results of certain [Cypher queries](#Graph.md#query), although they will eventually see more usage.
+Currently, `Path` objects are only returned in the results of certain [Cypher queries](Graph.md#query), although they will eventually see more usage.
 
 ## Properties
 

@@ -66,7 +66,7 @@ Creates a new relationship from the node represented by `node` or `nodeId` argum
 
 `callback`
 * Signature: `Function (error, relationship)`
-    * `relationship` A [Relationship](#Relationship.md) object.
+    * `relationship` A [Relationship](Relationship.md) object.
 
 ### createRelationshipTo
 

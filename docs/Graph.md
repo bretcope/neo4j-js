@@ -198,7 +198,8 @@ Gets a relationship by ID.
 `id`
 * String or number representing the ID of the relationship to search for.
 
-`ids` See the equivalent description above in [getNode](#getnode).
+`ids`
+* See the equivalent description above in [getNode](#getnode).
 
 `callback`
 * If the node is not found `error.code` will equal `404`. Signature: `Function (error, relationship)`
