@@ -4,7 +4,12 @@
 
 Both [Node](Node.md) and [Relationship](Relationship.md) classes inherit from this base class. In the documentation below, everywhere that `Base` is used as a type, it is implied to be either a Node or Relationship depending on the usage context.
 
-**Methods**
+**[Properties](#properties)**
+
+* [data](#data)
+* [id](#id)
+
+**[Methods](#methods)**
 
 * [deleteProperties](#deleteproperties)
 * [index](#index)

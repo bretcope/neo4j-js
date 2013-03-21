@@ -4,6 +4,12 @@
 
 A graph class represents a connection to a particular neo4j database.
 
+**[Properties](#properties)**
+
+* [version](#version)
+
+**[Methods](#methods)
+
 **Node Related Methods**
 
 * [createNode](#createnode)

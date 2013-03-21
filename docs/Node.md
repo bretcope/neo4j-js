@@ -4,9 +4,19 @@
 
 Node objects represent nodes in neo4j. They inherit from the [Base](Base.md) class.
 
-**Methods**
+**[Properties](#properties)**
 
+* [data](#data)
+* [id](#id)
+
+**[Methods](#methods)**
+
+* [createRelationshipFrom](#createrelationshipfrom)
+* [createRelationshipTo](#createrelationshipto)
 * [deleteProperties](#deleteproperties)
+* [getAllRelationships](#getallrelationships)
+* [getIncomingRelationships](#getincomingrelationships)
+* [getOutgoingRelationships](#getoutgoingrelationships)
 * [index](#index)
 * [refreshProperties](#refreshproperties)
 * [removeFromIndex](#removefromindex)
@@ -31,9 +41,68 @@ Inherited from [Base.id](Base.md#id)
 
 ## Methods
 
+### createRelationshipFrom
+
+```scala
+Node.createRelationshipFrom ( [Batch,] Node node, String type, Function callback )
+Node.createRelationshipFrom ( [Batch,] Node node, String type, Object data, Function callback )
+Node.createRelationshipFrom ( [Batch,] String|Number nodeId, String type, Function callback )
+Node.createRelationshipFrom ( [Batch,] String|Number nodeId, String type, Object data, Function callback )
+```
+
+Creates a new relationship from the node represented by `node` or `nodeId` arguments to 'this' node.
+
+`node`
+* The `Node` from which the relationship will be created to 'this' `Node`.
+
+`nodeId`
+* Instead of supplying a `Node` object, a node ID can be provided as a string or a number.
+
+`type`
+* The relationship type.
+
+`data`
+* Allows properties to be set on the relationship at the time of creation.
+
+`callback`
+* Signature: `Function (error, relationship)`
+    * `relationship` A [Relationship](#Relationship.md) object.
+
+### createRelationshipTo
+
+Identical to [createRelationshipFrom](#createrelationshipfrom) except that the relationship direction is reversed.
+
 ### deleteProperties
 
 Inherited from [Base.deleteProperties](Base.md#deleteproperties)
+
+### getAllRelationships
+
+```scala
+Node.getAllRelationships ( [Batch,] Function callback )
+Node.getAllRelationships ( [Batch,] String type, Function callback )
+Node.getAllRelationships ( [Batch,] Array types, Function callback )
+```
+
+DESCRIPTION
+
+`type`
+* Limits request to only relationships of one type.
+
+`types`
+* An array of strings which limit the request to only relationships with types listed in `types`.
+
+`callback`
+* Signature: `Function (error, relationships)`
+    * `relationships` An array of [Relationship](Relationship.md) objects. If no relationships are found, `relationships.length === 0`.
+
+### getIncomingRelationships
+
+Identical to [getAllRelationships](#getallrelationships) except that only incoming relationships are requested.
+
+### getOutgoingRelationships
+
+Identical to [getAllRelationships](#getallrelationships) except that only outgoing relationships are requested.
 
 ### index
 

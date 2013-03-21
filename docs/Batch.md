@@ -4,6 +4,14 @@
 
 `Batch` objects facilitate grouping multiple API calls into a single batch request. Most library methods accept a `Batch` object as an optional first parameter.
 
+**[Properties](#properties)**
+
+* [requests](#requests)
+
+**[Methods](#methods)**
+
+* [run](#run)
+
 ## Constructor
 
 `Batch` objects are instantiated using [Graph.createBatch](Graph.md#createbatch).

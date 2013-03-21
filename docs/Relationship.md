@@ -4,7 +4,16 @@
 
 Relationship objects represent relationships (graph edges) in neo4j. They inherit from the [Base](Base.md) class.
 
-**Methods**
+> This class is incomplete. It will likely have more methods/properties in the near future.
+
+**[Properties](#properties)**
+
+* [data](#data)
+* [end](#end)
+* [id](#id)
+* [start](#start)
+
+**[Methods](#methods)**
 
 * [deleteProperties](#deleteproperties)
 * [index](#index)
@@ -17,7 +26,7 @@ Relationship objects represent relationships (graph edges) in neo4j. They inheri
 
 ## Constructor
 
-//
+The `Relationship` constructor is internal. Objects are instantiated by various library functions, for example [Graph.getRelationship](Graph.md#getrelationship).
 
 ## Properties
 
@@ -25,9 +34,25 @@ Relationship objects represent relationships (graph edges) in neo4j. They inheri
 
 Inherited from [Base.data](Base.md#data)
 
+### end
+
+```scala
+(String) Relationship.end
+```
+
+Represents the ID of the end Node.
+
 ### id
 
 Inherited from [Base.id](Base.md#id)
+
+### start
+
+```scala
+(String) Relationship.start
+```
+
+Represents the ID of the start Node.
 
 ## Methods
 
