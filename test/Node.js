@@ -201,7 +201,7 @@ describe('Node', function ()
 			return function (error, props)
 			{
 				assert(!error, error);
-				assert.deepEqual(expected, props, 'properties are incorrect');
+				assert.deepEqual(props, expected, 'properties are incorrect');
 				
 				if (done)
 					done();

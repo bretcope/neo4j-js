@@ -27,7 +27,7 @@ Base objects are never directly instantiated. `Base` is essentially a virtual cl
 (Object) Base.data
 ```
 
-Represents the properties associated with this neo4j object. This object is frozen and cannot be edited.
+Represents the properties associated with this node/relationship. This object is frozen and cannot be edited.
 
 ### id
 
@@ -50,7 +50,7 @@ Base.deleteProperties ( [Batch,] Boolean updateData, String property, Function c
 Base.deleteProperties ( [Batch,] Boolean updateData, Array properties, Function callback )
 ```
 
-Deletes some or all properties.
+Deletes some or all properties on this node/relationship.
 
 `updateData`
 * By default, a call to [refreshProperties](#refreshproperties) is automatically batched together with this method. To prevent this, set `updateData` to false.
@@ -61,58 +61,152 @@ Deletes some or all properties.
 `properties`
 * An array of strings representing the properties to delete.
 
-> If neither `property` nor `properties` are provided, all properties will be deleted.
+> **Note:** If neither `property` nor `properties` arguments are provided, all properties will be deleted.
 
 `callback`
-* Signature: `Function (error)`
+* Signature: `Function (error, properties)`
+    * `properties` The updated [Base.data](#data) object. Only provided when `updateData !== false`.
 
 ### index
 
 ```scala
-Base.METHODNAME ( [Batch,] )
+Base.index ( [Batch,] String index, String key, Mixed value, Function callback )
+Base.index ( [Batch,] String index, Object properties, Function callback )
 ```
 
-DESCRIPTION
+Indexes one or more key/value pairs in relation to the node/relationship object.
+
+> **Caution:** This does not overwrite previous entries. If you index the same key/value/item combination twice, two index entries are created. To do update-type operations, you need to [delete the old entry](#removefromindex) before adding a new one.
+> *(Excerpt from http://docs.neo4j.org/chunked/stable/rest-api-indexes.html#rest-api-add-node-to-index)*
+
+`index`
+* The name of the index.
+
+`key`
+* The name of the key being indexed.
+
+`value`
+* The value to index.
+
+`properties`
+* Allows multiple key/value pairs to be indexed at once. `{ key1: 'value1', key2: 'value2', ... }`
+
+`callback`
+* Signature: `Function (error)`
 
 ### refreshProperties
 
 ```scala
-Base.METHODNAME ( [Batch,] )
+Base.refreshProperties ( [Batch,] Function callback )
 ```
 
-DESCRIPTION
+Updates [Base.data](#data) with the most current properties in neo4j.
+
+`callback`
+* Signature: `Function (error, properties)`
+    * `properties` The updated [Base.data](#data) object.
 
 ### removeFromIndex
 
 ```scala
-Base.METHODNAME ( [Batch,] )
+Base.removeFromIndex ( [Batch,] String index, Function callback )
+Base.removeFromIndex ( [Batch,] String index, String key, Function callback )
+Base.removeFromIndex ( [Batch,] String index, String key, Mixed value, Function callback )
+Base.removeFromIndex ( [Batch,] String index, Array keys, Function callback )
+Base.removeFromIndex ( [Batch,] String index, Object properties, Function callback )
 ```
 
-DESCRIPTION
+Removes some, or all, index entries for a node/relationship.
+
+`index`
+* The name of the index to remove from.
+
+`key`
+* The name of the key to remove.
+
+`value`
+* If provided, only entries which match both the key and value will be removed.
+
+`keys`
+* An array of strings representing multiple keys which should be removed.
+
+`properties`
+* Allows multiple keys and values to be specified for removal. Since `null` is not a valid property value in neo4j, if the value of any key is `null`, it will be treated as if no value was provided (meaning that key is eligible for removal regardless of its value in the index).
+
+> If `key`, `value`, `keys`, and `properties` are all omitted, then all key/value pairs associated with the node/relationship will be removed from `index`.
+
+`callback`
+* Signature: `Function (error)`
 
 ### replaceAllProperties
 
 ```scala
-Base.METHODNAME ( [Batch,] )
+Base.replaceAllProperties ( [Batch,] Object properties, Function callback )
+Base.replaceAllProperties ( [Batch,] String key, Mixed value, Function callback )
+Base.replaceAllProperties ( [Batch,] Boolean updateData, Object properties, Function callback )
+Base.replaceAllProperties ( [Batch,] Boolean updateData, String key, Mixed value, Function callback )
 ```
 
-DESCRIPTION
+Replaces all the properties on this node/relationship.
+
+`updateData`
+* See description in [deleteProperties](#deleteproperties)
+
+`properties`
+* The new data/properties object.
+
+`key`
+* If you want to replace all properties with a single property, you can simply provide a single key/value pair as arguments.
+
+`value`
+* See `key` parameter above.
+
+`callback`
+* Signature: `Function (error, properties)`
+    * `properties` The updated [Base.data](#data) object. Only provided when `updateData !== false`.
 
 ### setProperties
 
 ```scala
-Base.METHODNAME ( [Batch,] )
+Base.setProperties ( [Batch,] Object properties, Function callback )
+Base.setProperties ( [Batch,] Boolean updateData, Object properties, Function callback )
 ```
 
-DESCRIPTION
+Sets individual properties on the node/relationship without erasing other properties.
+
+`updateData`
+* See description in [deleteProperties](#deleteproperties)
+
+`properties`
+* Key/values of the properties to set.
+
+`callback`
+* Signature: `Function (error, properties)`
+    * `properties` The updated [Base.data](#data) object. Only provided when `updateData !== false`.
 
 ### setProperty
 
 ```scala
-Base.METHODNAME ( [Batch,] )
+Base.setProperty ( [Batch,] String key, Mixed value, Function callback )
+Base.setProperty ( [Batch,] Boolean updateData, String key, Mixed value, Function callback )
 ```
 
-DESCRIPTION
+Sets a property on the node/relationship
+
+`updateData`
+* See description in [deleteProperties](#deleteproperties)
+
+`key`
+* The property name (key) to set.
+
+`value`
+* The value of the property to set.
+
+`callback`
+* Signature: `Function (error, properties)`
+    * `properties` The updated [Base.data](#data) object. Only provided when `updateData !== false`.
+    
+> __Note:__ `setProperty` is actually just an alias for [setProperties](#setproperties) and can be used interchangeably, although it probably will make more sense to use them in the manners described above.
 
 ### valueOf
 
@@ -120,4 +214,4 @@ DESCRIPTION
 (String) Base.valueOf ( )
 ```
 
-Overrides `Object.prototype.valueOf`. Returns `this.id`.
+Overrides `Object.prototype.valueOf`. Returns [Base.id](#id).
