@@ -1,6 +1,6 @@
-# Batch Class
-
 [« Documentation Home](Documentation.md)
+
+# Batch Class
 
 `Batch` objects facilitate grouping multiple API calls into a single batch request. Most library methods accept a `Batch` object as an optional first parameter.
 
@@ -16,7 +16,11 @@ var batch = graph.createBatch();
 
 ## requests
 
-`Batch.requests {Array}` An array of the batched requests. It is used internally by library methods, and it should be not be necessary to edit manually. **NEVER** reassign this property. For example: `batch.requests = [];` will break the batch system.  
+```scala
+Array Batch.requests
+```
+
+An array of the batched requests. It is used internally by library methods, and it should be not be necessary to edit manually. **NEVER** reassign this property. For example: `batch.requests = [];` will break the batch system.  
 
 ## Methods
 

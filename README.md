@@ -50,7 +50,7 @@ Gremlin support has not been implemented yet. Priority is considered low since C
 
 ## Usage
 
-Since effort is currently focused primarily on coding, the examples below are provided to help get you started, but are far from comprehensive. The best place to look for examples in the meantime is probably the [unit tests](#unit-testing) found inside the `/test` folder.
+The examples below are provided to help get you started, but are far from comprehensive. [Reference Documentation](docs/Documentation.md) is currently being worked on. Another place to look for examples in the meantime are the [unit tests](#unit-testing) found inside the `/test` folder.
 
 ##### Install
 
@@ -61,7 +61,6 @@ npm install neo4j-js
 ##### Connecting
 
 ```javascript
-
 neo4j.connect('http://localhost:7474/db/data/', function (err, graph) {
     if (err)
         throw err;
@@ -78,6 +77,8 @@ graph.createNode({ prop1: 'node property', boolProperty: false }, function (err,
 });
 ```
 
+[Graph.createNode reference](docs/Graph.md#createnode)
+
 ##### Get Node By Id
 
 ```javascript
@@ -85,6 +86,8 @@ graph.getNode(5, function (err, node) {
     console.log(err ? err : node.data); // print the node's properties
 }
 ```
+
+[Graph.getNode reference](docs/Graph.md#getnode)
 
 ##### Get Multiple Nodes
 
@@ -100,32 +103,11 @@ graph.getNode([5, 23, 84], function (err, nodes) {
 }
 ```
 
+[Graph.getNode reference](docs/Graph.md#getnode)
+
 ##### Cypher Queries
 
-```javascript
-var query = [
-    'START n = node({id})',
-    'MATCH m-[r]-n',
-    'RETURN m, r'
-];
-
-graph.query(query.join('\n'), { id: 1 }, function (err, obj) {
-    if (err) {
-        console.log(err);
-        console.log(err.stack);
-    }
-    else {
-        for (var i = 0; i < obj.length; i++) {
-            var relationship = obj[i].r;
-            var node = obj[i].m;
-            
-            // ... do something with the nodes and relationships we just grabbed 
-        }
-        
-        console.log(JSON.stringify(obj, null, 5 )); // may help to print the returned structure
-    }
-});
-```
+See [Graph.query](docs/Graph.md#query) for an example.
 
 ## Unit Testing
 

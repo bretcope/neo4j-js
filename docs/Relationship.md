@@ -1,3 +1,17 @@
+[« Documentation Home](Documentation.md)
+
 # Relationship Class
 
-[« Documentation Home](Documentation.md)
+//
+
+## Constructor
+
+//
+
+## Properties
+
+//
+
+## Methods
+
+//
