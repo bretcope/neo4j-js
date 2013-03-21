@@ -52,13 +52,13 @@ Gremlin support has not been implemented yet. Priority is considered low since C
 
 The examples below are provided to help get you started, but are far from comprehensive. [Reference Documentation](docs/Documentation.md) is currently being worked on. Another place to look for examples in the meantime are the [unit tests](#unit-testing) found inside the `/test` folder.
 
-##### Install
+### Install
 
 ```
 npm install neo4j-js
 ```
 
-##### Connecting
+### Connecting
 
 ```javascript
 neo4j.connect('http://localhost:7474/db/data/', function (err, graph) {
@@ -69,7 +69,9 @@ neo4j.connect('http://localhost:7474/db/data/', function (err, graph) {
 });
 ```
 
-##### Creating Nodes
+### Creating Nodes
+
+[Graph.createNode reference](docs/Graph.md#createnode)
 
 ```javascript
 graph.createNode({ prop1: 'node property', boolProperty: false }, function (err, node) {
@@ -77,9 +79,9 @@ graph.createNode({ prop1: 'node property', boolProperty: false }, function (err,
 });
 ```
 
-[Graph.createNode reference](docs/Graph.md#createnode)
+### Get Node By Id
 
-##### Get Node By Id
+[Graph.getNode reference](docs/Graph.md#getnode)
 
 ```javascript
 graph.getNode(5, function (err, node) {
@@ -87,9 +89,9 @@ graph.getNode(5, function (err, node) {
 }
 ```
 
-[Graph.getNode reference](docs/Graph.md#getnode)
+### Get Multiple Nodes
 
-##### Get Multiple Nodes
+[Graph.getNode reference](docs/Graph.md#getnode)
 
 ```javascript
 graph.getNode([5, 23, 84], function (err, nodes) {
@@ -103,11 +105,27 @@ graph.getNode([5, 23, 84], function (err, nodes) {
 }
 ```
 
-[Graph.getNode reference](docs/Graph.md#getnode)
-
-##### Cypher Queries
+### Cypher Queries
 
 See [Graph.query](docs/Graph.md#query) for an example.
+
+### Batching
+
+Most of the library functions optionally accept a [Batch](docs/Batch.md) object as the first argument. This allows multiple API calls to be grouped into a single request which may significantly improve performance in some cases.
+
+```javascript
+var batch = graph.createBatch();
+
+//create a node and get another in the same request
+graph.createNode(batch, { key: 'value' }, function (error, node) {
+    //this will not be called until after batch.run()
+});
+graph.getNode(batch, 18, function (error, node) {
+    //this will not be called until after batch.run()
+});
+
+batch.run();
+```
 
 ## Unit Testing
 

@@ -1,6 +1,6 @@
 {
   "name": "neo4j-js",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Atlantis Flight Development <bret@atlantisflight.org>",
   "description": "A Node.js (pure JavaScript) client library for accessing neo4j databases with batch support.",
   "contributors": [ 
