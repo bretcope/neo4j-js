@@ -8,7 +8,7 @@ A graph class represents a connection to a particular neo4j database.
 
 * [version](#version)
 
-**[Methods](#methods)
+**[Methods](#methods)**
 
 **Node Related Methods**
 
