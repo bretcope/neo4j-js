@@ -129,9 +129,9 @@ batch.run();
 
 ## Unit Testing
 
-Some unit tests are in place, and several more will follow soon.
+Some unit tests are in place, and more should follow as appropriate.
 
-The unit tests rely on [Mocha](http://visionmedia.github.com/mocha/) and [Chai](http://chaijs.com/) which are included as development dependencies in the npm package. If you are not concerned about unit testing, you can omit downloading Mocha and Chai during install by including the production flag `npm install neo4j-js --production`.
+The unit tests rely on [Mocha](http://visionmedia.github.com/mocha/) and [Chai](http://chaijs.com/) which are included as development dependencies in the npm package. If not installed already, go to the `node_modules/neo4j` directory and type `npm install`.
  
 To run the unit tests:
 

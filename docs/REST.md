@@ -92,13 +92,13 @@ Automatic Indexes (17.12)
 [!] 17.12.2. Find node by query from an automatic index  "** See 17.10.10 note."
 
 Configurable Automatic Indexing (17.13)
-[ ] 17.13.1. Create an auto index for nodes with specific configuration
-[ ] 17.13.2. Create an auto index for relationships with specific configuration
-[ ] 17.13.3. Get current status for autoindexing on nodes
-[ ] 17.13.4. Enable node autoindexing
-[ ] 17.13.5. Lookup list of properties being autoindexed
-[ ] 17.13.6. Add a property for autoindexing on nodes
-[ ] 17.13.7. Remove a property for autoindexing on nodes
+[x] 17.13.1. Create an auto index for nodes with specific configuration
+[x] 17.13.2. Create an auto index for relationships with specific configuration
+[x] 17.13.3. Get current status for autoindexing on nodes
+[x] 17.13.4. Enable node autoindexing
+[x] 17.13.5. Lookup list of properties being autoindexed
+[x] 17.13.6. Add a property for autoindexing on nodes
+[x] 17.13.7. Remove a property for autoindexing on nodes
 
 Traversals (17.14)
 [ ] 17.14.1. Traversal using a return filter

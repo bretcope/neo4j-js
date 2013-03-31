@@ -32,6 +32,21 @@ A graph class represents a connection to a particular neo4j database.
 * [listRelationshipIndexes](#listrelationshipindexes)
 * [relationshipExactQuery](#relationshipexactquery)
 
+**Auto-Indexing Related Methods**
+
+* [addNodeAutoIndexProperty](#addnodeautoindexproperty)
+* [addRelationshipAutoIndexProperty](#addrelationshipautoindexproperty)
+* [createNodeIndex](#createnodeindex)
+* [createRelationshipIndex](#createrelationshipindex)
+* [getNodeAutoIndexingStatus](#getnodeautoindexingstatus)
+* [getRelationshipAutoIndexingStatus](#getrelationshipautoindexingstatus)
+* [listNodeAutoIndexProperties](#listnodeautoindexproperties)
+* [listRelationshipAutoIndexProperties](#listrelationshipautoindexproperties)
+* [removeNodeAutoIndexProperty](#removenodeautoindexproperty)
+* [removeRelationshipAutoIndexProperty](#removerelationshipautoindexproperty)
+* [setNodeAutoIndexingStatus](#setnodeautoindexingstatus)
+* [setRelationshipAutoIndexingStatus](#setrelationshipautoindexingstatus)
+
 **Other Methods**
 
 * [createBatch](#createbatch)
@@ -66,6 +81,28 @@ The version string as reported by neo4j.
 
 ## Methods
 
+### addNodeAutoIndexProperty
+
+```scala
+Graph.addNodeAutoIndexProperty ( [Batch,] String property, Function callback )
+```
+
+Adds a property which will be automatically indexed for nodes (if automatic indexes are enabled.) See http://docs.neo4j.org/chunked/stable/auto-indexing.html
+
+`property`
+* The name of the property to index.
+
+`callback`
+* Signature: `Function (error)`
+
+### addRelationshipAutoIndexProperty
+
+```scala
+Graph.addRelationshipAutoIndexProperty ( [Batch,] String property, Function callback )
+```
+
+The relationships version of [addNodeAutoIndexProperty](#addnodeautoindexproperty)
+
 ### createBatch
 
 ```scala
@@ -95,12 +132,14 @@ Creates a node in neo4j.
 ```scala
 Graph.createNodeIndex ( [Batch,] String name, Function callback )
 Graph.createNodeIndex ( [Batch,] String name, Object config, Function callback )
+Graph.createNodeIndex ( [Batch,] Function callback )
+Graph.createNodeIndex ( [Batch,] Object config, Function callback )
 ```
 
 Creates a node index.
 
 `name`
-* The name of the index to be created.
+* The name of the index to be created. If `name` is not specified, `'node_auto_index'` is assumed. See warnings in regards to auto-index creation: http://docs.neo4j.org/chunked/stable/rest-api-configurable-auto-indexes.html
 
 `config`
 * Allows a configuration to be specified. If omitted, the default configuration will be used. See http://docs.neo4j.org/chunked/stable/rest-api-indexes.html#rest-api-create-node-index-with-configuration
@@ -113,9 +152,11 @@ Creates a node index.
 ```scala
 Graph.createRelationshipIndex ( [Batch,] String name, Function callback )
 Graph.createRelationshipIndex ( [Batch,] String name, Object config, Function callback )
+Graph.createRelationshipIndex ( [Batch,] Function callback )
+Graph.createRelationshipIndex ( [Batch,] Object config, Function callback )
 ```
 
-Creates a relationship index. See [createNodeIndex](#createnodeindex) for parameter descriptions.
+Creates a relationship index. See [createNodeIndex](#createnodeindex) for parameter descriptions. `name` defaults to `'relationship_auto_index'`.
 
 ### deleteNode
 
@@ -186,6 +227,18 @@ Gets a node by ID.
 * If the node is not found `error.code` will equal `404`. Signature: `Function (error, node)`
     * `node` If found, a [Node](Node.md) object. (If the `ids` parameter was used, `node` will actually be an array of Nodes.)
 
+### getNodeAutoIndexingStatus
+
+```scala
+Graph.getNodeAutoIndexingStatus ( [Batch,] Function callback )
+```
+
+Gets whether automatic node indexing is enabled or not.
+
+`callback`
+* Signature: `Function (error, status)`
+    * `status` A Boolean representing the auto-indexing status.
+
 ### getRelationship
 
 ```scala
@@ -204,6 +257,13 @@ Gets a relationship by ID.
 `callback`
 * If the node is not found `error.code` will equal `404`. Signature: `Function (error, relationship)`
     * `relationship` If found, a [Relationship](Relationship.md) object. (If the `ids` parameter was used, `relationship` will actually be an array of Relationships.)
+
+### getRelationshipAutoIndexingStatus
+
+```scala
+Graph.getRelationshipAutoIndexingStatus ( [Batch,] Function callback )
+```
+The relationships version of [getNodeAutoIndexingStatus](#getnodeautoindexingstatus).
 
 ### getRelationshipTypes
 
@@ -245,7 +305,19 @@ Returns `true` if `relationship` is a [Relationship](Relationship.md) object, ot
 
 Returns `true` if `path` is a [Path](Path.md) object, otherwise `false`.
 
-> Each `Graph` object has its own unique copy of the [Path](Path.md) class. This means only Paths instantiated using this graph object will evaluate to true. Paths instantiated through a different graph object will evaluate to false. 
+> Each `Graph` object has its own unique copy of the [Path](Path.md) class. This means only Paths instantiated using this graph object will evaluate to true. Paths instantiated through a different graph object will evaluate to false.
+
+### listNodeAutoIndexProperties
+
+```scala
+Graph.listNodeAutoIndexProperties ( [Batch,] Function callback )
+```
+
+Gets a list of properties currently being automatically indexed for nodes.
+
+`callback`
+* Signature: `Function (error, properties)`
+    * `properties` An array of strings representing the list of properties.
 
 ### listNodeIndexes
 
@@ -258,6 +330,14 @@ Gets a list of node indexes.
 `callback`
 * Signature: `Function (error, indexes)`
     * `indexes` Simply the JSON.parse from the REST API response. See http://docs.neo4j.org/chunked/stable/rest-api-indexes.html#rest-api-list-node-indexes for details on the object's structure.
+
+### listRelationshipAutoIndexProperties
+
+```scala
+Graph.listRelationshipAutoIndexProperties ( [Batch,] Function callback )
+```
+
+The relationships version of [listNodeAutoIndexProperties](#listnodeautoindexproperties).
 
 ### listRelationshipIndexes
 
@@ -356,3 +436,47 @@ Graph.relationshipExactQuery ( [Batch,] String index, String key, Mixed value, F
 Queries an index for relationships matching the `key` and `value`.
 
 Uses the same parameter descriptions as [nodeExactQuery](#nodeexactquery), except `index` defaults to `"relationship_auto_index"` and `callback` provides an array of [Relationship](Relationship.md) objects instead of Nodes.
+
+### removeNodeAutoIndexProperty
+
+```scala
+Graph.removeNodeAutoIndexProperty ( [Batch,] String property, Function callback )
+```
+
+The opposite of [addNodeAutoIndexProperty](#addnodeautoindexproperty).
+
+`property`
+* The name of the property to stop indexing.
+
+`callback`
+* Signature: `Function (error)`
+
+### removeRelationshipAutoIndexProperty
+
+```scala
+Graph.removeRelationshipAutoIndexProperty ( [Batch,] String property, Function callback )
+```
+
+The relationships version of [removeNodeAutoIndexProperty](#removenodeautoindexproperty).
+
+### setNodeAutoIndexingStatus
+
+```scala
+Graph.setNodeAutoIndexingStatus ( [Batch,] Boolean enable, Function callback )
+```
+
+Enables or disables automatic node indexing.
+
+`enable`
+* `true` to enable, `false` to disable. 
+
+`callback`
+* Signature: `Function (error)`
+
+### setRelationshipAutoIndexingStatus
+
+```scala
+Graph.setRelationshipAutoIndexingStatus ( [Batch,] Boolean enable, Function callback )
+```
+
+The relationships version of [setNodeAutoIndexingStatus](#setnodeautoindexingstatus).
