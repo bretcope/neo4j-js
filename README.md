@@ -38,7 +38,7 @@ Nearly all Node and Relationship endpoint features are implemented. See the [Res
 
 ##### Indexing
 
-Indexing is partially implemented. Indexes can be created, deleted, listed, and queried. Key/value pair can be inserted and removed from indexes using nodes and relationships. 'Unique Indexes' and 'Configurable Automatic Indexing' have not been implemented yet.
+Indexing is partially implemented. Indexes can be created, deleted, listed, and queried. Key/value pairs can be inserted and removed from indexes using nodes and relationships. Automatic Indexing can be configured. Unique Indexing features are being worked on currently.
 
 ##### Graph Algorithms
 
