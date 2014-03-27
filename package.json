@@ -10,6 +10,9 @@
     }
   ],
   "main": "./lib/Neo4jApi.js",
+  "scripts": {
+    "test": "mocha"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/bretcope/neo4j-js.git"
