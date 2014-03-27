@@ -1,4 +1,6 @@
 var assert = require('chai').assert;
+var fs = require('fs');
+var path = require('path');
 
 module.exports = function (graph)
 {
@@ -88,3 +90,9 @@ module.exports = function (graph)
 	
 	return _public;
 };
+
+var configPath = path.join(__dirname, 'config.json');
+if (!fs.existsSync(configPath))
+	configPath = path.join(__dirname, 'config.defaults.json');
+
+module.exports.config = JSON.parse(fs.readFileSync(configPath, { encoding: 'utf8' }));

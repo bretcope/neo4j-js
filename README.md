@@ -133,7 +133,4 @@ Some unit tests are in place, and more should follow as appropriate.
 
 The unit tests rely on [Mocha](http://visionmedia.github.com/mocha/) and [Chai](http://chaijs.com/) which are included as development dependencies in the npm package. If not installed already, go to the `node_modules/neo4j` directory and type `npm install`.
  
-To run the unit tests:
-
-* Copy `test/config.sample.json` to `test/config.json` and edit as necessary.
-* Go to the root `neo4j-js` directory and type `mocha`.
+Use `npm test` to run the unit tests. If you need to connect to a host other than `localhost:7474`, create a `test/config.json` file using the same JSON format as the `config.defaults.json` in the same directory.

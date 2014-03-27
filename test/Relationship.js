@@ -1,6 +1,7 @@
 var assert = require('chai').assert,
-	config = require('./config.json'),
 	neo4j = require('../lib/Neo4jApi.js');
+
+var config = require('./Helpers.js').config;
 
 describe('Relationship', function ()
 {

@@ -1,5 +1,5 @@
 var assert = require('chai').assert,
-	config = require('./config.json'),
+	config = require('./Helpers.js').config,
 	neo4j = require('../lib/Neo4jApi.js');
 
 describe('Connect', function ()
