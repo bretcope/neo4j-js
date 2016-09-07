@@ -1,3 +1,7 @@
+# DEPRECATION NOTICE
+
+__THIS LIBRARY IS DEPRECATED.__ It has not been updated in years, and will not be supported in any way. __You should choose a different Neo4j library__. This repository exists solely for historical purposes.
+
 # neo4j-js
 
 A Node.js (pure JavaScript) client library for accessing neo4j databases with batch support.
